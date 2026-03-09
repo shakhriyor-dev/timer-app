@@ -1,10 +1,8 @@
-class ZenTimer {
+class RetroTimer {
      constructor() {
-          // 1. Initial State & Config
           this.config = {
                work: parseInt(localStorage.getItem('workTime')) || 25,
-               break: parseInt(localStorage.getItem('breakTime')) || 5,
-               circumference: 2 * Math.PI * 110
+               break: parseInt(localStorage.getItem('breakTime')) || 5
           };
 
           this.state = {
@@ -14,12 +12,10 @@ class ZenTimer {
                timerId: null
           };
 
-          // 2. DOM Elements
-          this.elems = {
-               minutes: document.getElementById('minutes'),
-               seconds: document.getElementById('seconds'),
-               status: document.getElementById('status'),
-               progress: document.querySelector('.progress'),
+          this.nodes = {
+               min: document.getElementById('minutes'),
+               sec: document.getElementById('seconds'),
+               status: document.getElementById('status-tag'),
                startBtn: document.getElementById('start-btn'),
                resetBtn: document.getElementById('reset-btn'),
                modal: document.getElementById('settings-modal'),
@@ -32,81 +28,61 @@ class ZenTimer {
      }
 
      init() {
-          this.elems.startBtn.addEventListener('click', () => this.toggle());
-          this.elems.resetBtn.addEventListener('click', () => this.reset());
-          this.elems.toggleSettings.addEventListener('click', () => this.elems.modal.classList.toggle('hidden'));
-          this.elems.saveBtn.addEventListener('click', () => this.saveSettings());
-          this.updateUI();
+          this.nodes.startBtn.addEventListener('click', () => this.toggle());
+          this.nodes.resetBtn.addEventListener('click', () => this.reset());
+          this.nodes.toggleSettings.addEventListener('click', () => this.nodes.modal.classList.toggle('hidden'));
+          this.nodes.saveBtn.addEventListener('click', () => this.save());
+          this.render();
      }
 
      toggle() {
           if (this.state.isActive) {
-               this.pause();
+               clearInterval(this.state.timerId);
+               this.state.isActive = false;
+               this.nodes.startBtn.textContent = 'RESUME';
           } else {
-               this.start();
+               this.state.isActive = true;
+               this.nodes.startBtn.textContent = 'PAUSE';
+               this.state.timerId = setInterval(() => {
+                    this.state.timeLeft--;
+                    this.render();
+                    if (this.state.timeLeft <= 0) this.switch();
+               }, 1000);
           }
      }
 
-     start() {
-          this.state.isActive = true;
-          this.elems.startBtn.textContent = 'PAUSE';
-          this.state.timerId = setInterval(() => {
-               this.state.timeLeft--;
-               this.updateUI();
-               if (this.state.timeLeft <= 0) this.switchMode();
-          }, 1000);
-     }
-
-     pause() {
+     reset() {
           clearInterval(this.state.timerId);
           this.state.isActive = false;
-          this.elems.startBtn.textContent = 'RESUME';
-     }
-
-     reset() {
-          this.pause();
           this.state.timeLeft = (this.state.isWorkMode ? this.config.work : this.config.break) * 60;
-          this.elems.startBtn.textContent = 'START';
-          this.updateUI();
+          this.nodes.startBtn.textContent = 'START';
+          this.render();
      }
 
-     switchMode() {
-          this.elems.alarm.play();
+     switch() {
+          this.nodes.alarm.play();
           this.state.isWorkMode = !this.state.isWorkMode;
-          this.state.timeLeft = (this.state.isWorkMode ? this.config.work : this.config.break) * 60;
-          this.elems.status.textContent = this.state.isWorkMode ? 'Focus Time' : 'Break Time';
+          this.nodes.status.textContent = this.state.isWorkMode ? 'FOCUS' : 'BREAK';
+          this.nodes.status.style.background = this.state.isWorkMode ? '#202020' : '#22c55e';
           this.reset();
      }
 
-     saveSettings() {
-          const w = document.getElementById('work-input').value;
-          const b = document.getElementById('break-input').value;
-
-          this.config.work = parseInt(w);
-          this.config.break = parseInt(b);
-          localStorage.setItem('workTime', w);
-          localStorage.setItem('breakTime', b);
-
-          this.elems.modal.classList.add('hidden');
+     save() {
+          this.config.work = parseInt(document.getElementById('work-input').value);
+          this.config.break = parseInt(document.getElementById('break-input').value);
+          localStorage.setItem('workTime', this.config.work);
+          localStorage.setItem('breakTime', this.config.break);
+          this.nodes.modal.classList.add('hidden');
           this.reset();
      }
 
-     updateUI() {
+     render() {
           const m = Math.floor(this.state.timeLeft / 60);
           const s = this.state.timeLeft % 60;
-
-          this.elems.minutes.textContent = m.toString().padStart(2, '0');
-          this.elems.seconds.textContent = s.toString().padStart(2, '0');
-
-          // Progress Ring calculation
-          const total = (this.state.isWorkMode ? this.config.work : this.config.break) * 60;
-          const offset = this.config.circumference - (this.state.timeLeft / total) * this.config.circumference;
-          this.elems.progress.style.strokeDashoffset = offset;
-
-          // Dynamic Favicon/Title
-          document.title = `${m}:${s.toString().padStart(2, '0')} - ZenTime`;
+          this.nodes.min.textContent = m.toString().padStart(2, '0');
+          this.nodes.sec.textContent = s.toString().padStart(2, '0');
+          document.title = `${m}:${s.toString().padStart(2, '0')} | Retro Pomodoro`;
      }
 }
 
-// Start Application
-document.addEventListener('DOMContentLoaded', () => new ZenTimer());
+new RetroTimer();
