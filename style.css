@@ -1,0 +1,57 @@
+body {
+     background: #0f172a;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+     font-family: 'Segoe UI', sans-serif;
+}
+
+.card {
+     background: #1e293b;
+     padding: 2rem;
+     border-radius: 20px;
+     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+     text-align: center;
+     border: 1px solid #334155;
+     width: 300px;
+}
+
+.timer-display {
+     font-size: 4rem;
+     font-weight: bold;
+     color: #38bdf8;
+     text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+     margin-bottom: 10px;
+}
+
+#status {
+     color: #94a3b8;
+     text-transform: uppercase;
+     letter-spacing: 2px;
+     margin-bottom: 25px;
+}
+
+/* Uiverse style button */
+.uiverse-btn {
+     padding: 10px 25px;
+     border: none;
+     border-radius: 8px;
+     background: #38bdf8;
+     color: #0f172a;
+     font-weight: bold;
+     cursor: pointer;
+     transition: 0.3s;
+}
+
+.uiverse-btn:hover {
+     box-shadow: 0 0 15px #38bdf8;
+     transform: translateY(-2px);
+}
+
+.secondary {
+     background: transparent;
+     color: #38bdf8;
+     border: 1px solid #38bdf8;
+     margin-left: 10px;
+}
