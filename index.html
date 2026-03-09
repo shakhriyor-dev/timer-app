@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Pomodoro</title>
-    <link rel="stylesheet" href="style.css">
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Retro Pomodoro</title>
+     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="neo-container">
-        <div class="neo-card">
-            <div class="neo-header">
-                <span id="status-tag" class="tag">FOCUS</span>
-                <button id="settings-toggle" class="neo-btn-small">⚙️</button>
-            </div>
+     <div class="neo-container">
+          <div class="neo-card">
+               <div class="neo-header">
+                    <span id="status-tag" class="tag">FOCUS</span>
+                    <button id="settings-toggle" class="neo-btn-small">⚙️</button>
+               </div>
 
-            <div class="timer-box">
-                <h1 id="timer-display"><span id="minutes">25</span>:<span id="seconds">00</span></h1>
-            </div>
+               <div class="timer-box">
+                    <h1 id="timer-display"><span id="minutes">25</span>:<span id="seconds">00</span></h1>
+               </div>
 
-            <div class="controls">
-                <button id="start-btn" class="neo-btn-main">START</button>
-                <button id="reset-btn" class="neo-btn-secondary">RESET</button>
-            </div>
-        </div>
+               <div class="controls">
+                    <button id="start-btn" class="neo-btn-main">START</button>
+                    <button id="reset-btn" class="neo-btn-secondary">RESET</button>
+               </div>
+          </div>
 
-        <div id="settings-modal" class="modal hidden">
-            <div class="neo-card modal-content">
-                <h3>SET TIME</h3>
-                <div class="input-group">
-                    <input type="number" id="work-input" value="25" placeholder="Work">
-                    <input type="number" id="break-input" value="5" placeholder="Break">
-                </div>
-                <button id="save-settings" class="neo-btn-main">APPLY</button>
-            </div>
-        </div>
-    </div>
+          <div id="settings-modal" class="modal hidden">
+               <div class="neo-card modal-content">
+                    <h3>SET TIME</h3>
+                    <div class="input-group">
+                         <input type="number" id="work-input" value="25" min="1" placeholder="Work (min)">
+                         <input type="number" id="break-input" value="5" min="1" placeholder="Break (min)">
+                    </div>
+                    <button id="save-settings" class="neo-btn-main">APPLY</button>
+               </div>
+          </div>
+     </div>
 
-    <audio id="alarm" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
-    <script src="script.js"></script>
+     <audio id="alarm" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+     <script src="script.js"></script>
 </body>
+
 </html>
