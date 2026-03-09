@@ -68,13 +68,24 @@ class RetroTimer {
      }
 
      save() {
-          this.config.work = parseInt(document.getElementById('work-input').value);
-          this.config.break = parseInt(document.getElementById('break-input').value);
+          const workVal = document.getElementById('work-input').value;
+          const breakVal = document.getElementById('break-input').value;
+      
+          // Tekshiruv: Bo'sh bo'lsa yoki son bo'lmasa
+          if (!workVal || !breakVal || workVal <= 0 || breakVal <= 0) {
+              alert("Iltimos, musbat vaqt kiriting!"); // Yoki chiroyliroq yozuv
+              return; // Funksiyani to'xtatish
+          }
+      
+          this.config.work = parseInt(workVal);
+          this.config.break = parseInt(breakVal);
+          
           localStorage.setItem('workTime', this.config.work);
           localStorage.setItem('breakTime', this.config.break);
+          
           this.nodes.modal.classList.add('hidden');
           this.reset();
-     }
+      }
 
      render() {
           const m = Math.floor(this.state.timeLeft / 60);
