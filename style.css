@@ -1,29 +1,30 @@
-/* Standart (Work Mode) - Qizil/Sariq sxemasi */
 :root {
      --bg: #FFDE59;
+     /* Yorqin sariq retro rang */
      --main: #FF5757;
+     /* Asosiy qizil */
      --dark: #202020;
      --white: #FFFFFF;
-     --accent: #5DE2E7;
 }
 
-/* Break Mode - Yashil/Havorang sxemasi */
-body.break-mode {
-     --bg: #5DE2E7;
-     /* Havorang fon */
-     --main: #22c55e;
-     /* Yashil tugma */
-     --accent: #FFDE59;
-     /* Sariq ikkinchi darajali tugma */
-}
-
-/* Silliq o'tish effekti */
 body {
-     transition: background-color 0.5s ease;
+     background-color: var(--bg);
+     font-family: 'Courier New', Courier, monospace;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+     margin: 0;
 }
 
 .neo-card {
-     transition: transform 0.2s, box-shadow 0.2s;
+     background: var(--white);
+     border: 4px solid var(--dark);
+     box-shadow: 10px 10px 0px var(--dark);
+     padding: 2rem;
+     width: 320px;
+     text-align: center;
+     transition: all 0.2s;
 }
 
 .tag {
