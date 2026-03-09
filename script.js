@@ -87,13 +87,22 @@ class RetroTimer {
           this.reset();
       }
 
-     render() {
+      render() {
+          // Agar timeLeft qandaydir sabab bilan NaN bo'lib qolsa (himoya qatlami)
+          if (isNaN(this.state.timeLeft)) {
+              this.nodes.min.textContent = "--";
+              this.nodes.sec.textContent = "--";
+              return;
+          }
+      
           const m = Math.floor(this.state.timeLeft / 60);
           const s = this.state.timeLeft % 60;
+          
           this.nodes.min.textContent = m.toString().padStart(2, '0');
           this.nodes.sec.textContent = s.toString().padStart(2, '0');
+          
           document.title = `${m}:${s.toString().padStart(2, '0')} | Retro Pomodoro`;
-     }
+      }
 }
 
 new RetroTimer();
